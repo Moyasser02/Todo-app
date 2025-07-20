@@ -22,6 +22,5 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 @app.get("/")
-async def read_all(db: db_dependency):
-    todos = db.query(Todos).all()
-    return todos
+async def health_check():
+    return {"status": "ok"}
