@@ -7,3 +7,13 @@ class UserBase(BaseModel):
     full_name: str = Field(..., min_length=1, max_length=50, example="John Doe")
     is_active: bool = Field(..., default=True, example=True)
     role: str = Field(..., default="user", example="user")
+
+class UserCreate(UserBase):
+    username: str = Field(..., min_length=3, max_length=30, example="johndoe")
+    password: str = Field(..., min_length=6, max_length=100, example="securepassword")
+    full_name: str = Field(..., min_length=1, max_length=50, example="John Doe")
+    email: EmailStr = Field(..., example="user@example.com")
+
+class UserLogin(UserBase):
+    username: str = Field(..., min_length=3, max_length=30, example="johndoe")
+    password: str = Field(..., min_length=6, max_length=100, example="securepassword")
