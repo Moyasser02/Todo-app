@@ -1,15 +1,15 @@
 from typing_extensions import Annotated
 from fastapi import FastAPI , Body , Depends
 from sqlalchemy.orm import Session, sessionmaker
-from database.core import engine , SessionLocal
-import todo.model
-from todo.model import Todos
-import users.model
-from users.model import User
+from dal.database import engine , SessionLocal
+import dal.models.todo_model
+from dal.models.todo_model import Todos
+import dal.models.todo_model
+from dal.models.todo_model import User
 app = FastAPI()
 
-todo.model.Base.metadata.create_all(bind=engine)
-users.model.Base.metadata.create_all(bind=engine)
+dal.models.todo_model.Base.metadata.create_all(bind=engine)
+dal.models.todo_model.Base.metadata.create_all(bind=engine)
 
 def get_db():
     db = SessionLocal()
