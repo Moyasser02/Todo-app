@@ -7,7 +7,7 @@ from dal.models.todo_model import Todos
 import dal.models.todo_model
 from dal.models.user_model import User
 from dal.deps import get_db
-from controllers import user_controller
+from controllers import user_controller , todo_controller
 from exceptions.exceptions import ApplicationException, application_exception_handler
 app = FastAPI()
 
@@ -16,6 +16,7 @@ dal.models.user_model.Base.metadata.create_all(bind=engine)
 
 app.add_exception_handler(ApplicationException, application_exception_handler)
 app.include_router(user_controller.router)
+app.include_router(todo_controller.router)
 
 @app.get("/")
 async def health_check():

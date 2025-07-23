@@ -21,28 +21,43 @@ class UserNotFoundException(ApplicationException):
         self.http_exception = HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     
 class TokenInvalidException(ApplicationException):
-    def __init__(self, message: str = "Token is invalid"):
-        super().__init__(status_code=status.HTTP_401_UNAUTHORIZED)
+    def __init__(self, message: str = "Invalid token", HTTPException: HTTPException = HTTPException):
+        super().__init__("Token Invalid")
+        self.message = message
+        self.http_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
 class InvalidUsernameOrPasswordException(ApplicationException):
-    def __init__(self, message: str = "Invalid username or password"):
-        super().__init__(status_code=status.HTTP_401_UNAUTHORIZED)
+    def __init__(self, message: str = "Invalid username or password", HTTPException: HTTPException = HTTPException):
+        super().__init__("Invalid Username or Password")
+        self.message = message
+        self.http_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
     
 class UserAlreadyExistsException(HTTPException):
-    def __init__(self, message: str = "User already exists"):
+    def __init__(self, message: str = "User already exists", HTTPException: HTTPException = HTTPException):
         super().__init__(status_code=status.HTTP_400_BAD_REQUEST, detail=message)
+        self.message = message
+        self.http_exception = HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
 class NoUsersFoundException(HTTPException):
-    def __init__(self, message: str = "No users found"):
+    def __init__(self, message: str =  "No User Found ", HTTPException: HTTPException = HTTPException):
         super().__init__(status_code=status.HTTP_404_NOT_FOUND, detail=message)
+        self.message = message
+        self.http_exception = HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+        
 
 class TodoNotFoundException(ApplicationException):
-    def __init__(self, message: str = "Todo not found"):
-        super().__init__(status_code=status.HTTP_404_NOT_FOUND)
+    def __init__(self, message: str = "Todo not found", HTTPException: HTTPException = HTTPException):
+        super().__init__("Todo Not Found")
+        self.message = message
+        self.http_exception = HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    
 
 class NoTodosFoundException(ApplicationException):
-    def __init__(self, message: str = "No todos found"):
-        super().__init__(status_code=status.HTTP_404_NOT_FOUND)
+    def __init__ (self, message: str = "No todos found", HTTPException: HTTPException = HTTPException):
+        super().__init__("No Todos Found")
+        self.message = message
+        self.http_exception = HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    
 
 
 async def application_exception_handler(request: Request, exc: ApplicationException):

@@ -22,4 +22,4 @@ class UserLogin(UserBase):
     password: str = Field(..., min_length=6, max_length=100, example="securepassword")
 
 class UserOut(UserBase):
-    pass
+    id: int
