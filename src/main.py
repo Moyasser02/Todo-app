@@ -1,8 +1,25 @@
-from fastapi import FastAPI
-
+from typing_extensions import Annotated
+from fastapi import FastAPI , Body , Depends
+from sqlalchemy.orm import Session, sessionmaker
+from dal.database import engine , SessionLocal
+import dal.models.todo_model
+from dal.models.todo_model import Todos
+import dal.models.todo_model
+from dal.models.user_model import User
+from dal.deps import get_db
+from controllers import user_controller , todo_controller , auth_controller
+from exceptions.exceptions import ApplicationException, application_exception_handler
+import asyncio
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
 
+
+app.add_exception_handler(ApplicationException, application_exception_handler)
+app.include_router(user_controller.router)
+app.include_router(todo_controller.router)
+app.include_router(auth_controller.router)
+
+@app.get("/")
+async def health_check():
+    return {"status": "ok"}
