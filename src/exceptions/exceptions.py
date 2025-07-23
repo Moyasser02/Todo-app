@@ -57,6 +57,11 @@ class NoTodosFoundException(ApplicationException):
         super().__init__("No Todos Found")
         self.message = message
         self.http_exception = HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+class AuthenticationException(ApplicationException):
+    def __init__(self, message: str = "Authentication failed", HTTPException: HTTPException = HTTPException):
+        super().__init__("Authentication Failed")
+        self.message = message
+        self.http_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
     
 
 

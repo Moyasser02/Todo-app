@@ -2,6 +2,7 @@
 from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
 from auth.password_hasher import PasswordHasher
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from dal.models.user_model import User
@@ -9,7 +10,10 @@ from config.environment import get_environment
 from typing import Optional
 from exceptions.exceptions import  PasswordVerificationException , TokenInvalidException , UserNotFoundException , InvalidUsernameOrPasswordException
 from typing import Dict
+from fastapi.security import OAuth2PasswordRequestForm
+from dal.deps import get_db
 environment = get_environment()
+
 
 
 SECRET_KEY = environment.SECRET_KEY
@@ -44,8 +48,9 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
         raise PasswordVerificationException()
 
 
-def authenticate_user(db: Session, username: str, password: str) -> User:
+def authenticate_user(username: str, password: str ) -> User:
     user = db.query(User).filter(User.username == username).first()
     if not user or not verify_password(password, user.hashed_password):
         raise InvalidUsernameOrPasswordException()
     return user
+

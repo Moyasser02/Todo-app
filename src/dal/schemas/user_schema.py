@@ -7,8 +7,8 @@ class UserBase(BaseModel):
     email: EmailStr = Field(..., example="user@example.com")
     password: str = Field(..., min_length=6, max_length=100, example="securepassword")
     full_name: str = Field(..., min_length=1, max_length=50, example="John Doe")
-   # is_active: bool = Field(default=True, example=True)
-  #  role: str = Field(default="user", example="user")
+    is_active: bool = Field(default=True, example=True)
+    role: str = Field(default="user", example="user")
 
 class UserCreate(UserBase):
     id: int = Field(..., ge=1, example=1)  

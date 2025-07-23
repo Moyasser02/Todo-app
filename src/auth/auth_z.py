@@ -4,11 +4,11 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from typing import Annotated
 
-from src.auth.auth_n import decode_token
+from auth.auth_n import decode_token
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")  
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/")  
 
-TokenData = Annotated[dict, Depends(oauth2_scheme)]
+TokenData = Annotated[str, Depends(oauth2_scheme)]
 
 
 def get_current_user(token: TokenData):
