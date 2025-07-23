@@ -48,7 +48,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
         raise PasswordVerificationException()
 
 
-def authenticate_user(username: str, password: str ) -> User:
+def authenticate_user(username: str, password: str ,db: AsyncSession = next(get_db()) ) -> User:
     user = db.query(User).filter(User.username == username).first()
     if not user or not verify_password(password, user.hashed_password):
         raise InvalidUsernameOrPasswordException()
